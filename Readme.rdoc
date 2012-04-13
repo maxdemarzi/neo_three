@@ -1,0 +1,25 @@
+=== Description
+
+Using {Three.js}[http://mrdoob.github.com/three.js/] and {Neo4j}[http://neo4j.org] to display a graph.
+
+=== How To
+
+Follow along on {Using Three.js with Neo4j}[http://wp.me/p26jdv-es]
+
+  git clone git@github.com:maxdemarzi/neo_three.git
+  cd neo_three
+  bundle install
+  rake neo4j:install
+  rake neo4j:start
+  rake neo4j:create
+  rackup
+  
+Then visit http://localhost:9292/index.html to see the examples.
+
+See an example running on heroku at {http://neothree.herokuapp.com/index.html}[http://neothree.herokuapp.com/index.html]
+
+=== Links
+
+* {Neo4j Community}[http://neo4j.org]
+* {Three.js}[http://mrdoob.github.com/three.js/]
+* {Max De Marzi}[http://maxdemarzi.com]
