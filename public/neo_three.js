@@ -48,22 +48,27 @@ function init() {
 
 	} );
 
-	var geometry = new THREE.Geometry();
+	//var geometry = new THREE.Geometry();
+    var geometry = new THREE.SphereGeometry( 50, 8, 7, false );
+    var material = new THREE.MeshNormalMaterial();
+    
+    group = new THREE.Object3D();
 
-	for ( var i = 0; i < 100; i ++ ) {
+	for ( var i = 0; i < 200; i ++ ) {
 
-		particle = new THREE.Particle( material );
-		particle.position.x = Math.random() * 2 - 1;
-		particle.position.y = Math.random() * 2 - 1;
-		particle.position.z = Math.random() * 2 - 1;
-		particle.position.normalize();
-		particle.position.multiplyScalar( Math.random() * 10 + 450 );
-		particle.scale.x = particle.scale.y = 5;
-		scene.add( particle );
-
-		geometry.vertices.push( new THREE.Vertex( particle.position ) );
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.x = Math.random() * 2000 - 1000;
+		mesh.position.y = Math.random() * 2000 - 1000;
+		mesh.position.z = Math.random() * 2000 - 1000;
+		mesh.rotation.x = Math.random() * 360 * ( Math.PI / 180 );
+		mesh.rotation.y = Math.random() * 360 * ( Math.PI / 180 );
+		mesh.matrixAutoUpdate = false;
+		mesh.updateMatrix();
+		group.add( mesh );
 
 	}
+
+    scene.add( group );
 
 	// lines
 
