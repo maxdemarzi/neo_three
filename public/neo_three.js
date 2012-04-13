@@ -71,9 +71,13 @@ function init() {
     scene.add( group );
 
 	// lines
-
-	var line = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5 } ) );
-	scene.add( line );
+    for (n in group.children) {
+    	var line_segment = new THREE.Geometry();
+    	line_segment.vertices.push( new THREE.Vertex( group.children[n].position ) );
+    	line_segment.vertices.push( new THREE.Vertex( group.children[Math.floor(Math.random() * group.children.length)].position ) );
+    	var line = new THREE.Line( line_segment, new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5 } ) );
+    	scene.add(line)
+    }
 
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
