@@ -32,21 +32,6 @@ function init() {
 
   // Nodes
 
-  var PI2 = Math.PI * 2;
-  var material = new THREE.ParticleCanvasMaterial( {
-
-    color: 0xffffff,
-    program: function ( context ) {
-
-      context.beginPath();
-      context.arc( 0, 0, 1, 0, PI2, true );
-      context.closePath();
-      context.fill();
-
-    }
-
-  } );
-
   var geometry = new THREE.SphereGeometry( 50, 8, 7, false );
   var material = new THREE.MeshNormalMaterial();
     
