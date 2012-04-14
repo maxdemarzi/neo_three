@@ -48,41 +48,41 @@ function init() {
 
 	} );
 
-	//var geometry = new THREE.Geometry();
     var geometry = new THREE.SphereGeometry( 50, 8, 7, false );
     var material = new THREE.MeshNormalMaterial();
     
     group = new THREE.Object3D();
-
-	for ( var i = 0; i < 200; i ++ ) {
-
-		var mesh = new THREE.Mesh( geometry, material );
-		mesh.position.x = Math.random() * 2000 - 1000;
-		mesh.position.y = Math.random() * 2000 - 1000;
-		mesh.position.z = Math.random() * 2000 - 1000;
-		mesh.rotation.x = Math.random() * 360 * ( Math.PI / 180 );
-		mesh.rotation.y = Math.random() * 360 * ( Math.PI / 180 );
-		mesh.matrixAutoUpdate = false;
-		mesh.updateMatrix();
-		group.add( mesh );
-
-	}
+		
+	  console.log(gon);
+		for (n in gon.nodes) {
+	
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.position.x = gon.nodes[n].position_x;
+			mesh.position.y = gon.nodes[n].position_y;
+			mesh.position.z = gon.nodes[n].position_z;
+			mesh.rotation.x = gon.nodes[n].rotation_x;
+			mesh.rotation.y = gon.nodes[n].rotation_y;
+			mesh.matrixAutoUpdate = false;
+			mesh.updateMatrix();
+			group.add( mesh );
+	
+		}
 
     scene.add( group );
-
-	// lines
-    for (n in group.children) {
-    	var line_segment = new THREE.Geometry();
-    	line_segment.vertices.push( new THREE.Vertex( group.children[n].position ) );
-    	line_segment.vertices.push( new THREE.Vertex( group.children[Math.floor(Math.random() * group.children.length)].position ) );
-    	var line = new THREE.Line( line_segment, new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5 } ) );
-    	scene.add(line)
-    }
-
-	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	
+		// lines
+	    for (n in gon.edges) {
+	    	var line_segment = new THREE.Geometry();
+	    	line_segment.vertices.push( new THREE.Vertex( group.children[gon.edges[n].start_id].position ) );
+	    	line_segment.vertices.push( new THREE.Vertex( group.children[gon.edges[n].end_id].position ) );
+	    	var line = new THREE.Line( line_segment, new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5 } ) );
+	    	scene.add(line)
+	    }
+ 
+	document.addEventListener( 'mousemove',  onDocumentMouseMove,  false );
 	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-	document.addEventListener( 'touchmove', onDocumentTouchMove, false );
-}
+	document.addEventListener( 'touchmove',  onDocumentTouchMove,  false );
+
 
 //
 

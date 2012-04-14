@@ -5,9 +5,4 @@ gem 'neography'
 gem 'haml'
 gem 'json'
 gem 'builder'
-
-group :test do
-  gem 'rspec'
-  gem 'rack-test'
-  gem 'net-http-spy' 
-end
+gem 'gon-sinatra'
