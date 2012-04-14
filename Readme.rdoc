@@ -14,7 +14,7 @@ Follow along on {Using Three.js with Neo4j}[http://wp.me/p26jdv-es]
   rake neo4j:create
   rackup
   
-Then visit http://localhost:9292/index.html to see the examples.
+Then visit http://localhost:9292 to see the visualization.
 
 See an example running on heroku at {http://neothree.herokuapp.com/index.html}[http://neothree.herokuapp.com/index.html]
 

@@ -14,107 +14,107 @@ animate();
 
 function init() {
 
-	var container, separation = 100, amountX = 50, amountY = 50,
-	particles, particle;
+  var container, separation = 100, amountX = 50, amountY = 50;
 
-	container = document.createElement('div');
-	document.body.appendChild(container);
+  container = document.createElement('div');
+  document.body.appendChild(container);
 
-	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.z = 100;
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+  camera.position.z = 100;
 
-	scene = new THREE.Scene();
+  scene = new THREE.Scene();
 
-	scene.add( camera );
+  scene.add( camera );
 
-	renderer = new THREE.CanvasRenderer();
-	renderer.setSize( window.innerWidth, window.innerHeight );
-	container.appendChild( renderer.domElement );
+  renderer = new THREE.CanvasRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  container.appendChild( renderer.domElement );
 
-	// particles
+  // Nodes
 
-	var PI2 = Math.PI * 2;
-	var material = new THREE.ParticleCanvasMaterial( {
+  var PI2 = Math.PI * 2;
+  var material = new THREE.ParticleCanvasMaterial( {
 
-		color: 0xffffff,
-		program: function ( context ) {
+    color: 0xffffff,
+    program: function ( context ) {
 
-			context.beginPath();
-			context.arc( 0, 0, 1, 0, PI2, true );
-			context.closePath();
-			context.fill();
+      context.beginPath();
+      context.arc( 0, 0, 1, 0, PI2, true );
+      context.closePath();
+      context.fill();
 
-		}
+    }
 
-	} );
+  } );
 
-    var geometry = new THREE.SphereGeometry( 50, 8, 7, false );
-    var material = new THREE.MeshNormalMaterial();
+  var geometry = new THREE.SphereGeometry( 50, 8, 7, false );
+  var material = new THREE.MeshNormalMaterial();
     
-    group = new THREE.Object3D();
+  group = new THREE.Object3D();
 		
-	  console.log(gon);
-		for (n in gon.nodes) {
+  for (n in gon.nodes) {
 	
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.position.x = gon.nodes[n].position_x;
-			mesh.position.y = gon.nodes[n].position_y;
-			mesh.position.z = gon.nodes[n].position_z;
-			mesh.rotation.x = gon.nodes[n].rotation_x;
-			mesh.rotation.y = gon.nodes[n].rotation_y;
-			mesh.matrixAutoUpdate = false;
-			mesh.updateMatrix();
-			group.add( mesh );
-	
-		}
+    var mesh = new THREE.Mesh( geometry, material );
+    mesh.position.x = gon.nodes[n].position_x;
+    mesh.position.y = gon.nodes[n].position_y;
+    mesh.position.z = gon.nodes[n].position_z;
+    mesh.rotation.x = gon.nodes[n].rotation_x;
+    mesh.rotation.y = gon.nodes[n].rotation_y;
+    mesh.matrixAutoUpdate = false;
+    mesh.updateMatrix();
+    group.add( mesh );
 
-    scene.add( group );
+  }
+
+  scene.add( group );
 	
-		// lines
-	    for (n in gon.edges) {
-	    	var line_segment = new THREE.Geometry();
-	    	line_segment.vertices.push( new THREE.Vertex( group.children[gon.edges[n].start_id].position ) );
-	    	line_segment.vertices.push( new THREE.Vertex( group.children[gon.edges[n].end_id].position ) );
-	    	var line = new THREE.Line( line_segment, new THREE.LineBasicMaterial( { color: 0xffffff, opacity: 0.5 } ) );
-	    	scene.add(line)
-	    }
+  // Edges
+
+  for (n in gon.edges) {
+    var line_segment = new THREE.Geometry();
+    line_segment.vertices.push( new THREE.Vertex( group.children[gon.edges[n].source - 1].position ) );
+    line_segment.vertices.push( new THREE.Vertex( group.children[gon.edges[n].target - 1].position ) );
+    var line = new THREE.Line( line_segment, new THREE.LineBasicMaterial( { color: Math.random() * 0xffffff , opacity: 0.5 } ) );
+
+    scene.add(line)
+  }
  
-	document.addEventListener( 'mousemove',  onDocumentMouseMove,  false );
-	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
-	document.addEventListener( 'touchmove',  onDocumentTouchMove,  false );
-
+  document.addEventListener( 'mousemove',  onDocumentMouseMove,  false );
+  document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+  document.addEventListener( 'touchmove',  onDocumentTouchMove,  false );
+}
 
 //
 
 function onDocumentMouseMove(event) {
 
-	mouseX = event.clientX - windowHalfX;
-	mouseY = event.clientY - windowHalfY;
+  mouseX = event.clientX - windowHalfX;
+  mouseY = event.clientY - windowHalfY;
 }
 
 function onDocumentTouchStart( event ) {
 
-	if ( event.touches.length > 1 ) {
+  if ( event.touches.length > 1 ) {
 
-		event.preventDefault();
+    event.preventDefault();
 
-		mouseX = event.touches[ 0 ].pageX - windowHalfX;
-		mouseY = event.touches[ 0 ].pageY - windowHalfY;
+    mouseX = event.touches[ 0 ].pageX - windowHalfX;
+    mouseY = event.touches[ 0 ].pageY - windowHalfY;
 
-	}
+  }
 
 }
 
 function onDocumentTouchMove( event ) {
 
-	if ( event.touches.length == 1 ) {
+  if ( event.touches.length == 1 ) {
 
-		event.preventDefault();
+    event.preventDefault();
 
-		mouseX = event.touches[ 0 ].pageX - windowHalfX;
-		mouseY = event.touches[ 0 ].pageY - windowHalfY;
+    mouseX = event.touches[ 0 ].pageX - windowHalfX;
+    mouseY = event.touches[ 0 ].pageY - windowHalfY;
 
-	}
+  }
 
 }
 
@@ -122,18 +122,18 @@ function onDocumentTouchMove( event ) {
 
 function animate() {
 
-	requestAnimationFrame( animate );
+  requestAnimationFrame( animate );
 
-	render();
+  render();
 
 }
 
 function render() {
 
-	camera.position.x += ( mouseX - camera.position.x ) * .05;
-	camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
-	camera.lookAt( scene.position );
+  camera.position.x += ( mouseX - camera.position.x ) * .05;
+  camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
+  camera.lookAt( scene.position );
 
-	renderer.render( scene, camera );
+  renderer.render( scene, camera );
 
 }
