@@ -55,7 +55,7 @@ function init() {
 	
   // Edges
 
-  for (n in gon.edges) {
+  for (n in (gon.edges - 1)) {
     var line_segment = new THREE.Geometry();
     line_segment.vertices.push( new THREE.Vertex( group.children[gon.edges[n].source - 1].position ) );
     line_segment.vertices.push( new THREE.Vertex( group.children[gon.edges[n].target - 1].position ) );
